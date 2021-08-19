@@ -24,6 +24,12 @@ default: &default
 development:
   <<: *default
   database: login_api_development
+  username: priya
+  password: '1234'
+  host: localhost
+  port: 5432
+  schema_search_path: myapp,sharedapp,public
+  min_messages: notice
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -58,6 +64,12 @@ development:
 test:
   <<: *default
   database: login_api_test
+  username: priya
+  password: '1234'
+  host: localhost
+  port: 5432
+  schema_search_path: myapp,sharedapp,public
+  min_messages: notice
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -82,5 +94,9 @@ test:
 production:
   <<: *default
   database: login_api_production
-  username: login_api
-  password: <%= ENV['LOGIN_API_DATABASE_PASSWORD'] %>
+  username: priya
+  password: '1234'
+  host: localhost
+  port: 5432
+  schema_search_path: myapp,sharedapp,public
+  min_messages: notice
