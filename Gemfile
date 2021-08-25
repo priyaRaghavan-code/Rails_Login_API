@@ -27,12 +27,10 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'bcrypt', '~> 3.1', '>= 3.1.16'
 
-gem 'rspec-rails'
-
 gem 'jwt'
 
-
 group :development, :test do
+  gem 'factory_bot_rails', '~> 6.2'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
@@ -43,5 +41,13 @@ group :development do
   gem 'spring'
 end
 
+
+group :test do
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'factory_bot_rails', '~> 6.2'
+  gem 'faker'
+  gem 'shoulda-matchers', '~> 4.5', '>= 4.5.1'
+end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
