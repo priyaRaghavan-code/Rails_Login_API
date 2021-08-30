@@ -29,6 +29,9 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.16'
 
 gem 'jwt'
 
+gem 'figaro'
+
+
 group :development, :test do
   gem 'factory_bot_rails', '~> 6.2'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

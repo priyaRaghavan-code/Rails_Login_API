@@ -1,7 +1,8 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # origins 'http://localhost:3000'
-    origins 'https://auth123-front-end.herokuapp.com'
+    # origins 'https://auth1234-front-end.herokuapp.com'
+    origins Figaro.env.LOCALHOST_ORIGIN
 
     resource '*',
       headers: :any,
