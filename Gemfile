@@ -30,7 +30,9 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.16'
 gem 'jwt'
 
 gem 'figaro'
-
+gem 'actionable', git: 'https://github.com/acima-credit/actionable.git'
+# gem 'activemodel-serializers-xml'
+# gem 'active_model_serializers'
 
 group :development, :test do
   gem 'factory_bot_rails', '~> 6.2'
