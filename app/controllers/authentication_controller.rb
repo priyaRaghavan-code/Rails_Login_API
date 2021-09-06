@@ -10,16 +10,20 @@ class AuthenticationController < ApplicationController
         Sessions::TokenEncoder
       )
       if result.success?
+        byebug
         render json: result.fixtures['token']
       else
         byebug
-        render json: { error: 'unauthorized' }, status: :unauthorized
+        # render json: { error: 'unauthorized' }, status: :unauthorized
         render json: { error: result.message }, status: :unauthorized
       end
   end
   private
 
+
+  byebug
   def login_params
+    byebug
     params.permit(:email, :password)
   end
 end

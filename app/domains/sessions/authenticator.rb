@@ -12,16 +12,16 @@ module Sessions
     )
       @_email= email
       @_password = password
-      @_jwt_encoder = @jwt_encoder
+      @_jwt_encoder = jwt_encoder
       @token = nil
+      @exp = nil
       puts("email",@_email)
     end
 
     private
     def find_user
-      byebug
-      @user = User.find_by email: @_email
       puts(@user,"Current user")
+      @user = User.find_by  email: @_email
       unless @user
         fail!(
           :find_user,
@@ -31,8 +31,7 @@ module Sessions
     end
 
     def authenticate
-      byebug
-      result = @user&.authenticate(params[:password])
+      result = @user&.authenticate(@_password)
       unless result
         fail!(
           :authenticate,
@@ -42,17 +41,8 @@ module Sessions
     end
 
     def generate_token
-      byebug
-      @token = @jwt_encoder.encode(user_id: @user.id,  exp: Time.now + 24.hours.to_i ) 
-      # @token = @jwt_encoder.encode(user_id: @user.id) # this fails
+      @exp = 24.hours.from_now.to_i
+      @token = @_jwt_encoder.encode( exp: @exp , data: { user_id: @user.id} ) 
     end
-
-    # def authenticate_1
-    #   # Business logic for authentication
-    #   @user = User.find_by email: @email # if @user is blank?
-    #   raise Exception.new("Failed: No user found")
-    #   @user&.authenticate(params[:password]) # if this fails
-    #   @jwt_encoder.encode(user_id: @user.id, { exp: Time.now+24.hours.to_i }) # this fails
-    # end
   end
 end

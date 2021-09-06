@@ -16,9 +16,10 @@ class ApplicationController < ActionController::API
     #   render json: { errors: e.message }, status: :unauthorized
     # end
     byebug
+    puts(request.headers['Authorization'])
     result = Sessions::TokenVerifier.run(
-      header: request.headers['Authorization'],
-      decoder: Sessions::TokenEncoder,
+      request.headers['Authorization'],
+      Sessions::TokenEncoder
     )
     render json: { errors: result.message }, status: :unauthorized unless result.success?
   end
