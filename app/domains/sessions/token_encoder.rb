@@ -9,7 +9,7 @@ module Sessions
     #     payload = opts.merge({ user_id: user_id})
     #     JWT.encode(payload, SECRET_KEY, ALGORITHM_TYPE)
     # end
-    
+  byebug
     def self.encode(opts)
       byebug
       # payload = opts.merge({ user_id: user_id})
@@ -21,10 +21,8 @@ module Sessions
     #   payload[:exp] = exp.to_i
     #   JWT.encode(payload, SECRET_KEY)
     # end
-    byebug
 
     def self.decode(token)
-      byebug
       decoded = JWT.decode(token, SECRET_KEY)[0]
       HashWithIndifferentAccess.new decoded
     end
