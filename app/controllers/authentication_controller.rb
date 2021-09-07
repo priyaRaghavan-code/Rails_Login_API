@@ -1,6 +1,6 @@
 class AuthenticationController < ApplicationController
   skip_before_action :authorize_request
-  
+
   def login
       result = Sessions::Authenticator.run(
         params[:email],
@@ -15,12 +15,7 @@ class AuthenticationController < ApplicationController
   end
   private
 
-
   def login_params
     params.permit(:email, :password)
   end
 end
-
-
-
-

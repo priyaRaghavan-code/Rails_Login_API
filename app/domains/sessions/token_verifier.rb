@@ -29,15 +29,12 @@ module Sessions
       @decoded = @_jwt_decoder.decode(@_header)
     end
     
-    
-    
     def verify
       @exp_time = Time.at(@decoded[:exp])
       current_time = Time.now
       if @exp_time > current_time
         @bool_time = true
-      end
-      
+      end 
     end
 
   end

@@ -5,7 +5,6 @@ class ApplicationController < ActionController::API
   end
 
   def authorize_request
-    puts(request.headers['Authorization'])
     result = Sessions::TokenVerifier.run(
       request.headers['Authorization'],
       Sessions::TokenEncoder
@@ -16,6 +15,4 @@ class ApplicationController < ActionController::API
       render json: { error: result.message }, status: :unauthorized
     end
   end
-  
 end
-

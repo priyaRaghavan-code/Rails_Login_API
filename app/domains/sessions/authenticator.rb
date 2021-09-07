@@ -1,6 +1,5 @@
 module Sessions
   class Authenticator < Actionable::Action
-    # extend Callable
     step :find_user
     step :authenticate
     step :generate_token
