@@ -21,7 +21,15 @@ class ApplicationController < ActionController::API
       request.headers['Authorization'],
       Sessions::TokenEncoder
     )
-    render json: { errors: result.message }, status: :unauthorized unless result.success?
+    # render json: { errors: result.message }, status: :unauthorized unless result.success?
+    if result.success?
+      byebug
+      render json: result.fixtures['bool_time']
+    else
+      byebug
+      # render json: { error: 'unauthorized' }, status: :unauthorized
+      render json: { error: result.message }, status: :unauthorized
+    end
   end
   
 end

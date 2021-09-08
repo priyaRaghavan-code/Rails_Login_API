@@ -14,7 +14,7 @@ module Sessions
     @_header = header
     @_jwt_decoder = jwt_decoder
     @decoded = nil
-    @current_user = nil
+    @bool_time = false
     end
 
     def parse_header
@@ -31,18 +31,19 @@ module Sessions
     def parse_token
       byebug
       @decoded = @_jwt_decoder.decode(@_header)
+      puts(@decoded)
     end
     
     
     
     def verify
-      puts(@decoded,"Decoded detail")
-      # puts(@decoded[data])
-      puts("Exp",User.find(@decoded[:user_id]))
-
-      @current_user = User.find(@decoded[:user_id])
       byebug
-      puts(@current_user)
+      @exp_time = Time.at(@decoded[:exp])
+      current_time = Time.now
+      if @exp_time > current_time
+        @bool_time = true
+      end
+      
     end
 
   end
