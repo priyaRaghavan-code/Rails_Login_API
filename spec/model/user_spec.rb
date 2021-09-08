@@ -1,6 +1,7 @@
 require 'spec_helper'
 describe User do
   context 'validation tests' do
+    
     it 'ensures password presence' do
       user = User.create(email: 'Sample@gmail.com')
       expect(user).to_not be_valid
@@ -35,5 +36,6 @@ describe User do
       user = User.create(name:'sample', username:'sample',email: 'sample@gmail.com',password:'1234@abc',password_confirmation: '1234@abc')
       expect(user).to be_valid
     end
+
   end
 end
