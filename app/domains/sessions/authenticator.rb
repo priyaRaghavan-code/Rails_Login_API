@@ -1,11 +1,9 @@
 module Sessions
   class Authenticator < Actionable::Action
-    # extend Callable
     step :find_user
     step :authenticate
     step :generate_token
 
-    byebug
     def initialize(
       email,
       password,
@@ -21,8 +19,6 @@ module Sessions
 
     private
     def find_user
-      byebug
-      puts(@user,"Current user")
       @user = User.find_by  email: @_email
       unless @user
         fail!(
