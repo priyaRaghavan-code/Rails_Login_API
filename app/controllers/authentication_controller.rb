@@ -1,23 +1,47 @@
 class AuthenticationController < ApplicationController
   before_action :authorize_request, except: :login
 
-  def login
-    @user = User.find_by_email(params[:email])
-    # byebug
-    if @user&.authenticate(params[:password])
-      token = JsonWebToken.encode(user_id: @user.id)
-      time = Time.now + 24.hours.to_i
-      render json: @user, status: :created
-      # render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                    #  name: @user.name }, status: :ok
-    else
-      render json: { error: 'unauthorized' }, status: :unauthorized
-    end
-  end
 
+  def login
+      byebug
+      result = Sessions::Authenticator.run(
+        params[:email],
+        params[:password],
+        Sessions::TokenEncoder
+      )
+      if result.success?
+        byebug
+        render json: result.fixtures['token']
+      else
+        byebug
+        # render json: { error: 'unauthorized' }, status: :unauthorized
+        render json: { error: result.message }, status: :unauthorized
+      end
+  end
   private
 
+
+  byebug
   def login_params
+    byebug
     params.permit(:email, :password)
   end
 end
+
+
+# def login
+#   byebug
+#   # byebug
+#     result = Sessions::Authenticator.run(
+#       email: params[:email],
+#       password: params[:password],
+#       jwt_encoder: Sessions::NewTokenEncoder,
+#     )
+#     if result.success?
+#       render json: result.fixtures['token']
+#     else
+#       render json: { error: 'unauthorized' }, status: :unauthorized
+#       render json: { error: result.message }, status: :unauthorized
+#     end
+# end
+
