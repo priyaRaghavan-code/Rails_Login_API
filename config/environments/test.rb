@@ -16,7 +16,7 @@ Rails.application.configure do
   # preloads Rails for running tests, you may have to set it to true.
   config.eager_load = false
   # config.hosts = "www.example.com"
-  config.hosts = Figaro.env.backend_url
+  config.hosts = Figaro.env.frontend_url
 
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
