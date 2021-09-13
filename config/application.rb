@@ -23,8 +23,8 @@ module LoginApi
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
-    config.hosts = "www.example.com"
-    config.hosts = "localhost"
+    # config.hosts = "www.example.com"
+    config.hosts = Figaro.env.backend_url
 
 
 
