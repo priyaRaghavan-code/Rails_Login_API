@@ -1,10 +1,8 @@
 module Users
   class Registration < Actionable::Action
-  
   step :build
   step :validate
-  step :create_user
-  
+  step :create
     def initialize(params)
       super()
       @_params = params
@@ -15,15 +13,21 @@ module Users
     end
     
     def validate
-      fail :name_invalid, "Name is missing" unless @_params[:name].present?
-      fail :username_invalid, "UserName missing" unless @_params[:username].present?
-      fail :email_invalid, "email is missing" unless @_params[:email].present?
-      fail :password_invalid, "password is missing" unless @_params[:password].present?
-      fail :pasconfirmation_invalid, "password confirmation missing" unless @_params[:password_confirmation].present? 
+      fail! :name_invalid, "Name is missing" unless @_params[:name].present?
+      fail! :username_invalid, "UserName missing" unless @_params[:username].present?
+      fail! :email_invalid, "email is missing" unless @_params[:email].present?
+      fail! :password_invalid, "password is missing" unless @_params[:password].present?
+      fail! :pasconfirmation_invalid, "password confirmation missing" unless @_params[:password_confirmation].present? 
     end
     
-    def create_user
-      @user.save!
+    def create
+      result = @user.save
+      unless  result
+        fail!(
+          :invalid,
+          @user.errors.full_messages.join(", ")
+        ) 
+      end
     end
   end
 end

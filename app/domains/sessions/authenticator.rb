@@ -32,10 +32,13 @@ module Sessions
       result = @user&.authenticate(@_password)
       unless result
         fail!(
-          :authenticate,
-          "Failed: Unable to verify credentails"
+          :invalid,
+          @user.errors.full_messages.join(", ")
         )
       end
+      # result = {
+      #   status: 'success'
+      # }
     end
 
     def generate_token

@@ -1,15 +1,16 @@
 class UsersController < ApplicationController
-  skip_before_action :authorize_request
-
+  before_action :authorize_request, except: :create
   def create
-    result = Users::Registration.run(user_params)
-    if result.success?
+    result = Users::Registration.run(user_params) 
+    case result.code
+    when :success
       render json: result.fixtures['user']
-    else
-      render json: { error: result.message }, status: :unauthorized
+    when :invalid
+      render json: { error: result.message }, status: :unprocessable_entity
     end
   end
 
+  private
   def user_params
     params.permit(
       :name, :username, :email, :password, :password_confirmation
