@@ -25,6 +25,7 @@ module LoginApi
     config.load_defaults 6.1
     # config.hosts = "www.example.com"
     config.hosts = Figaro.env.backend_url
+    # config.hosts = Figaro.env.host_name
 
 
 

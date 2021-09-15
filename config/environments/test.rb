@@ -17,6 +17,8 @@ Rails.application.configure do
   config.eager_load = false
   # config.hosts = "www.example.com"
   config.hosts = Figaro.env.backend_url
+  # config.hosts = Figaro.env.host_name
+
 
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
