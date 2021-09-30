@@ -2,6 +2,8 @@ class ApplicationController < ActionController::API
   # protect_from_forgery with: :exception
   # before_action :current_cart,  except: :authorize_request
 
+  before_action :current_cart, except: :authorize_request
+
   def not_found
     render json: { error: 'Not Found!' }
   end
@@ -17,5 +19,4 @@ class ApplicationController < ActionController::API
       render json: { error: result.message }, status: :unauthorized
     end
   end
-  
 end
