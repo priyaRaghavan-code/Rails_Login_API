@@ -3,15 +3,20 @@ Rails.application.routes.draw do
   resources :users
   post '/auth/login', to: 'authentication#login'
   # get '/*a', to: 'application#not_found'
-  resources :products
-  resources :categories, only: [:index] do
-    resources :products, only: [:index] do
+
+  namespace :api do
+    namespace :v1 do
+      resources :products
     end
   end
-  get '/cart', to: "order_items#index"
-  resources :order_items, path: '/cart/items'
-  get '/cart/checkout', to:'orders#new', as: :checkout
-  patch '/cart/checkout', to:'orders#create'
+  
+  namespace :api do
+    namespace :v1 do
+      resources :cart_items
+      post 'cart_items/:id/add' => "cart_items#add_quantity", as: "cart_item_add"
+      post 'cart_items/:id/reduce' => "cart_items#reduce_quantity", as: "cart_item_reduce"
 
+    end
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -1,0 +1,18 @@
+
+when paym is successsful clear the cart
+
+create migration item_status def: true 
+after paym is done 
+change with line items as cart_items
+no need of cart controller
+while adding the product to cart use ajax 
+method-find and initialize-for creating the item
+
+no need of adherate
+
+in prod add quantity
+
+move quantity to the cart_items
+make quantity by default 0-integer
+use increment method to increment
+check increment!(:quantity)

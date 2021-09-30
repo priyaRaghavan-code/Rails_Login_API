@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  # protect_from_forgery with: :exception
+  # before_action :current_cart,  except: :authorize_request
 
   before_action :current_cart, except: :authorize_request
 
@@ -16,18 +18,5 @@ class ApplicationController < ActionController::API
     else
       render json: { error: result.message }, status: :unauthorized
     end
-  end
-
-  def current_cart
-    @current_cart ||= ShoppingCart.new((token: cart_token))
-  end
-  helper_method :current_cart
-
-  private
-
-  def cart_token
-    return @cart_token unless @cart_token.nil?
-    session[:cart_token] ||= SecureRandom.hex(8)
-    @cart_token = session[:cart_token]
   end
 end

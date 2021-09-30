@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_15_170547) do
+ActiveRecord::Schema.define(version: 2021_09_23_151722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,53 +43,38 @@ ActiveRecord::Schema.define(version: 2021_09_15_170547) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "cart_items", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.decimal "total"
+    t.boolean "status_key"
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_cart_items_on_user_id"
+  end
+
+  create_table "cart_products", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "cart_item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cart_item_id"], name: "index_cart_products_on_cart_item_id"
+    t.index ["product_id"], name: "index_cart_products_on_product_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "order_items", force: :cascade do |t|
-    t.integer "quantity", default: 0, null: false
-    t.decimal "price", precision: 15, scale: 2, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "order_id", null: false
-    t.index ["order_id"], name: "index_order_items_on_order_id"
-  end
-
-  create_table "orders", force: :cascade do |t|
-    t.decimal "sub_total", precision: 15, scale: 2, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "token"
-    t.string "status", default: "cart"
-  end
-
-  create_table "product_categories", force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.bigint "category_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id"], name: "index_product_categories_on_category_id"
-    t.index ["product_id"], name: "index_product_categories_on_product_id"
-  end
-
-  create_table "product_variants", force: :cascade do |t|
-    t.string "title", null: false
-    t.decimal "price", precision: 15, scale: 2, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "product_id", null: false
-    t.index ["product_id"], name: "index_product_variants_on_product_id"
-  end
-
   create_table "products", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "name"
+    t.integer "price"
     t.text "description"
-    t.decimal "price", precision: 15, scale: 2, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "image"
   end
 
   create_table "users", force: :cascade do |t|
@@ -103,8 +88,7 @@ ActiveRecord::Schema.define(version: 2021_09_15_170547) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "order_items", "orders"
-  add_foreign_key "product_categories", "categories"
-  add_foreign_key "product_categories", "products"
-  add_foreign_key "product_variants", "products"
+  add_foreign_key "cart_items", "users"
+  add_foreign_key "cart_products", "cart_items"
+  add_foreign_key "cart_products", "products"
 end
