@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   # protect_from_forgery with: :exception
   # before_action :current_cart,  except: :authorize_request
 
-  before_action :current_cart, except: :authorize_request
+  # before_action :current_cart, except: :authorize_request
 
   def not_found
     render json: { error: 'Not Found!' }
