@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+25.times do |i|
+    Product.create!(
+        name:"Watch",
+        description: "Good watch",
+        price: 124.6,
+        brand: "Fastrack",
+        type: "Female",
+        available: true,
+        department: "electronics"
+    )
+end 
