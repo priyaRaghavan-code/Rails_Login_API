@@ -14,7 +14,7 @@ module Sessions
       @_jwt_encoder = jwt_encoder
       @token = nil
       @exp = nil
-      puts("email",@_email)
+      # puts("email",@_email)
     end
 
     private
